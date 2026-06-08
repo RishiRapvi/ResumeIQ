@@ -982,18 +982,16 @@
             <span>Try Demo Mode</span>
             <span aria-hidden="true">&rarr;</span>
           </button>
-          <a class="secondary-link" href="{{ sample_resume_href }}" target="_blank" rel="noreferrer">
+          <a class="secondary-link" href="./sample-resume.html" target="_blank" rel="noreferrer">
             <span>View Sample Resume</span>
           </a>
           <a class="secondary-link" href="#upload-section">
             <span>Upload Your Own</span>
           </a>
         </div>
-        {% if upload_enabled %}
-        <div class="hero-action-note">Built with Flask, PDF text extraction, structured LLM output, and deploy-ready backend routes.</div>
-        {% else %}
+        
         <div class="hero-action-note">This GitHub Pages version is a static recruiter preview. Demo mode is fully interactive here, while live PDF upload remains available in the full Flask app source.</div>
-        {% endif %}
+        
         <div class="hero-proof">
           <div class="hero-proof-item">
             <strong>Demo First</strong>
@@ -1035,70 +1033,32 @@
       <div class="uploader-shell">
         <div class="uploader-header">
           <div>
-            {% if upload_enabled %}
-            <h2>Try your own resume</h2>
-            <p>Upload a PDF to generate live analysis with strengths, weaknesses, missing keywords, ATS notes, and targeted revision suggestions.</p>
-            {% else %}
+            
             <h2>Static GitHub Pages preview</h2>
             <p>This free public version is optimized for recruiter review: instant demo mode, a sample resume, and zero cold starts. The live PDF upload workflow is part of the Flask app implementation and source code.</p>
-            {% endif %}
+            
           </div>
           <div class="privacy-note">
-            {% if upload_enabled %}
-            Demo mode uses a sample resume. Uploaded resumes are processed only to generate the current analysis response.
-            {% else %}
+            
             GitHub Pages only hosts static HTML, CSS, and JavaScript, so this public demo intentionally highlights the recruiter preview flow instead of the backend upload path.
-            {% endif %}
+            
           </div>
         </div>
 
-        {% if upload_enabled %}
-        <div class="drop-zone" id="drop-zone" role="button" tabindex="0" aria-describedby="upload-help">
-          <div class="upload-icon" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 13h6m-3-3v6m5 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"></path>
-            </svg>
-          </div>
-          <h2>Drop your resume here</h2>
-          <p id="upload-help">PDF only. Click anywhere in this panel or drag a file in to start.</p>
-          <div class="upload-meta">Maximum upload size: {{ max_upload_mb }} MB</div>
-          <input type="file" id="file-input" accept=".pdf,application/pdf">
-
-          <div class="file-pill" id="file-pill">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span class="file-name-text" id="file-name"></span>
-          </div>
-
-          <div class="uploader-actions">
-            <button class="analyze-btn" id="analyze-btn" disabled>
-              <span>Analyze Resume</span>
-              <span aria-hidden="true">&rarr;</span>
-            </button>
-            <button class="demo-btn" id="demo-btn" type="button">
-              <span>Try Demo Instead</span>
-            </button>
-            <a class="secondary-link" href="{{ sample_resume_href }}" target="_blank" rel="noreferrer">
-              <span>View Sample Resume</span>
-            </a>
-            <div class="demo-note">Want the fastest preview? Use demo mode to see a full sample result instantly.</div>
-          </div>
-        </div>
-        {% else %}
+        
         <div class="uploader-actions">
           <button class="demo-btn" id="demo-btn" type="button">
             <span>Try Demo Mode</span>
           </button>
-          <a class="secondary-link" href="{{ sample_resume_href }}" target="_blank" rel="noreferrer">
+          <a class="secondary-link" href="./sample-resume.html" target="_blank" rel="noreferrer">
             <span>View Sample Resume</span>
           </a>
-          <a class="secondary-link" href="{{ github_repo_url }}" target="_blank" rel="noreferrer">
+          <a class="secondary-link" href="https://github.com/RishiRapvi/ResumeIQ" target="_blank" rel="noreferrer">
             <span>View Flask Source</span>
           </a>
           <div class="demo-note">Want the full backend flow? The Flask implementation in the repository includes PDF parsing, upload validation, API routes, and deploy configuration.</div>
         </div>
-        {% endif %}
+        
       </div>
 
       <div class="loader" id="loader" aria-live="polite">
@@ -1198,19 +1158,19 @@
           <span>Built with Flask, PDF parsing, structured LLM output, demo mode, deploy configuration, and sample artifacts for faster evaluation.</span>
         </div>
         <div class="footer-links">
-          <a class="footer-link" href="{{ sample_resume_href }}" target="_blank" rel="noreferrer">Sample Resume</a>
-          <a class="footer-link" href="{{ github_profile_url }}" target="_blank" rel="noreferrer">GitHub</a>
-          <a class="footer-link" href="{{ linkedin_url }}" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="footer-link" href="./sample-resume.html" target="_blank" rel="noreferrer">Sample Resume</a>
+          <a class="footer-link" href="https://github.com/RishiRapvi/" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="footer-link" href="https://www.linkedin.com/in/lockedin999/" target="_blank" rel="noreferrer">LinkedIn</a>
         </div>
       </div>
     </footer>
   </div>
 
   <script>
-    const SITE_MODE = {{ site_mode | tojson }};
-    const UPLOAD_ENABLED = {{ upload_enabled | tojson }};
-    const ANALYZE_ENDPOINT = {{ ("/api/analyze" if upload_enabled else none) | tojson }};
-    const DEMO_ANALYSIS = {{ demo_analysis | tojson }};
+    const SITE_MODE = "static";
+    const UPLOAD_ENABLED = false;
+    const ANALYZE_ENDPOINT = null;
+    const DEMO_ANALYSIS = {"ats_notes": "The resume is generally ATS-friendly because it uses readable headings and straightforward formatting. It would score even better with tighter keyword alignment to the exact target job description.", "ats_score": 88, "demo_mode": true, "missing_keywords": ["LLM evaluation", "RAG", "vector databases", "system design", "CI/CD", "observability"], "overall_score": 84, "source_name": "Demo Candidate - Software Engineer Resume", "strengths": ["Clear progression across internships, projects, and hands-on engineering work", "Strong technical stack coverage across backend, frontend, and cloud tooling", "Impact-oriented bullets that already hint at ownership and collaboration"], "suggestions": [{"fix": "Add metrics such as latency reduction, revenue impact, user growth, or time saved for at least the top 3 bullets.", "issue": "Bullets show solid work but do not consistently quantify results.", "section": "Experience"}, {"fix": "Lead each project bullet with the outcome, then mention the stack and one technical challenge you solved.", "issue": "The strongest technical projects are not framed around the problem solved and the architecture used.", "section": "Projects"}, {"fix": "Split skills into categories such as Languages, Frameworks, Cloud, and AI/ML to improve readability and ATS parsing.", "issue": "The skills list is broad but visually flat, which makes it harder to scan quickly.", "section": "Skills"}], "summary": "This resume reads like a strong early-career to mid-level software engineer profile with clear product impact and a solid technical foundation. The biggest opportunity is tightening the narrative around measurable outcomes and making AI/ML experience more explicit for target roles.", "weaknesses": ["Several bullets describe responsibilities without quantifying business impact", "AI/ML exposure is present but not positioned strongly enough for AI-focused roles", "Skills section could be grouped more cleanly for faster recruiter and ATS scanning"]};
 
     const dropZone = document.getElementById("drop-zone");
     const fileInput = document.getElementById("file-input");

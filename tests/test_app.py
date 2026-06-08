@@ -1,7 +1,10 @@
 from io import BytesIO
+from pathlib import Path
+from tempfile import TemporaryDirectory
 import unittest
 
-from app import app
+from app import app, get_template_context
+from scripts.build_github_pages import build_pages
 
 
 class ResumeIQAppTests(unittest.TestCase):
@@ -13,6 +16,24 @@ class ResumeIQAppTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"ResumeIQ", response.data)
+        self.assertIn(b"What This Project Demonstrates", response.data)
+        self.assertIn(b"Recruiter-Friendly Demo", response.data)
+        self.assertIn(b"Try Demo Mode", response.data)
+
+    def test_sample_resume_page_loads(self) -> None:
+        response = self.client.get("/sample-resume")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Maya Chen", response.data)
+        self.assertIn(b"ResumeIQ Demo Artifact", response.data)
+
+    def test_static_template_context_uses_relative_links(self) -> None:
+        context = get_template_context("static")
+
+        self.assertEqual(context["site_mode"], "static")
+        self.assertFalse(context["upload_enabled"])
+        self.assertEqual(context["home_href"], "./index.html")
+        self.assertEqual(context["sample_resume_href"], "./sample-resume.html")
 
     def test_health_endpoint_returns_json(self) -> None:
         response = self.client.get("/api/health")
@@ -50,6 +71,18 @@ class ResumeIQAppTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 400)
         self.assertEqual(payload["error"], "Only PDF files are supported.")
+
+    def test_static_build_outputs_docs_site(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            build_pages(tmpdir)
+
+            index_html = Path(tmpdir, "index.html").read_text(encoding="utf-8")
+            sample_resume_html = Path(tmpdir, "sample-resume.html").read_text(encoding="utf-8")
+
+            self.assertIn("Static GitHub Pages preview", index_html)
+            self.assertIn("./sample-resume.html", index_html)
+            self.assertIn("View Flask Source", index_html)
+            self.assertIn("./index.html", sample_resume_html)
 
 
 if __name__ == "__main__":

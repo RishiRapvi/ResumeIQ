@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sample Resume | ResumeIQ Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --ink: #151822;
+      --ink-soft: #4c5264;
+      --paper: #f5f0e6;
+      --panel: #ffffff;
+      --navy: #1a2345;
+      --gold: #c9a24b;
+      --gold-soft: #fbf2dc;
+      --border: rgba(26, 35, 69, 0.12);
+      --shadow: 0 18px 45px rgba(14, 18, 32, 0.1);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+    }
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(201, 162, 75, 0.16), transparent 24%),
+        linear-gradient(180deg, #faf7ef 0%, var(--paper) 100%);
+      padding: 24px;
+    }
+
+    .page {
+      width: min(960px, 100%);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+      padding: 16px 20px;
+      border-radius: 20px;
+      background: rgba(26, 35, 69, 0.96);
+      color: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    .topbar strong {
+      font-family: "Syne", sans-serif;
+      font-size: 1.05rem;
+      letter-spacing: -0.03em;
+    }
+
+    .topbar a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .resume {
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(240px, 0.7fr);
+      gap: 18px;
+      padding: 30px;
+      background: linear-gradient(160deg, rgba(26, 35, 69, 0.98), rgba(41, 55, 98, 0.92));
+      color: #ffffff;
+    }
+
+    .hero h1 {
+      font-family: "Syne", sans-serif;
+      font-size: clamp(2.1rem, 5vw, 3.1rem);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      margin-bottom: 10px;
+    }
+
+    .hero h2 {
+      font-size: 1rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.82);
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.75;
+      max-width: 58ch;
+    }
+
+    .meta {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .meta-item span {
+      display: block;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255, 255, 255, 0.62);
+      margin-bottom: 5px;
+    }
+
+    .meta-item strong {
+      font-size: 0.96rem;
+      line-height: 1.5;
+    }
+
+    .body {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(250px, 0.8fr);
+      gap: 26px;
+      padding: 28px 30px 32px;
+    }
+
+    .section + .section {
+      margin-top: 24px;
+    }
+
+    .section-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--gold-soft);
+      color: #895300;
+      font-family: "Syne", sans-serif;
+      font-size: 0.84rem;
+      letter-spacing: 0.04em;
+    }
+
+    .entry {
+      padding: 16px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .entry:first-of-type {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .entry-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .entry-head strong {
+      font-size: 1rem;
+    }
+
+    .entry-head span {
+      color: var(--ink-soft);
+      font-weight: 500;
+    }
+
+    .entry p {
+      color: var(--ink-soft);
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    .entry ul {
+      padding-left: 18px;
+      color: var(--ink-soft);
+      line-height: 1.7;
+    }
+
+    .entry li + li {
+      margin-top: 6px;
+    }
+
+    .card {
+      padding: 18px;
+      border-radius: var(--radius-md);
+      background: #fbfaf6;
+      border: 1px solid var(--border);
+    }
+
+    .card + .card {
+      margin-top: 16px;
+    }
+
+    .card h3 {
+      font-family: "Syne", sans-serif;
+      font-size: 1rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+    }
+
+    .note {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(201, 162, 75, 0.1);
+      color: #7a4c00;
+      line-height: 1.65;
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 780px) {
+      .hero,
+      .body {
+        grid-template-columns: 1fr;
+      }
+
+      .hero,
+      .body {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      body {
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <strong>ResumeIQ Demo Artifact</strong>
+      <a href="{{ home_href }}">Back to ResumeIQ</a>
+    </div>
+
+    <article class="resume">
+      <section class="hero">
+        <div>
+          <h1>Maya Chen</h1>
+          <h2>Software Engineer | Full-Stack and Applied AI</h2>
+          <p>Product-minded engineer with experience building internal tools, customer-facing platforms, and AI-assisted workflows. Interested in backend and platform roles where clear user impact, speed, and reliability matter.</p>
+        </div>
+        <aside class="meta">
+          <div class="meta-item">
+            <span>Location</span>
+            <strong>New York, NY</strong>
+          </div>
+          <div class="meta-item">
+            <span>Email</span>
+            <strong>maya.chen.dev@example.com</strong>
+          </div>
+          <div class="meta-item">
+            <span>Links</span>
+            <strong>github.com/mayachen | linkedin.com/in/mayachen</strong>
+          </div>
+        </aside>
+      </section>
+
+      <section class="body">
+        <div>
+          <div class="section">
+            <div class="section-title">Experience</div>
+
+            <div class="entry">
+              <div class="entry-head">
+                <strong>Software Engineer Intern, Nimbus Labs</strong>
+                <span>Summer 2025</span>
+              </div>
+              <p>Built internal workflow tooling for the support engineering team and partnered with product to improve issue triage speed.</p>
+              <ul>
+                <li>Implemented a Flask and React dashboard that reduced manual ticket-routing effort across the team.</li>
+                <li>Added usage instrumentation and alerting for a key support workflow used by multiple internal stakeholders.</li>
+                <li>Collaborated with design and engineering mentors to refine release quality before rollout.</li>
+              </ul>
+            </div>
+
+            <div class="entry">
+              <div class="entry-head">
+                <strong>Research Assistant, Applied Systems Lab</strong>
+                <span>2024 - 2025</span>
+              </div>
+              <p>Contributed to experiments around document understanding and retrieval for technical knowledge workflows.</p>
+              <ul>
+                <li>Prototyped pipelines for parsing semi-structured documents and evaluating answer quality.</li>
+                <li>Supported benchmark creation and experiment tracking for retrieval-heavy prototypes.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-title">Projects</div>
+
+            <div class="entry">
+              <div class="entry-head">
+                <strong>ResumeIQ</strong>
+                <span>Flask, Claude API, PDF Processing</span>
+              </div>
+              <p>Built a resume analysis product that extracts text from uploaded PDFs and returns recruiter-style scoring, ATS feedback, and concrete revision suggestions.</p>
+            </div>
+
+            <div class="entry">
+              <div class="entry-head">
+                <strong>CampusOps Scheduler</strong>
+                <span>Python, Postgres, React</span>
+              </div>
+              <p>Created an internal scheduling interface for student operations staff with role-aware views and faster bulk editing.</p>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-title">Education</div>
+
+            <div class="entry">
+              <div class="entry-head">
+                <strong>B.S. in Computer Science</strong>
+                <span>2026</span>
+              </div>
+              <p>Relevant coursework: machine learning, databases, distributed systems, operating systems, and human-computer interaction.</p>
+            </div>
+          </div>
+        </div>
+
+        <aside>
+          <div class="card">
+            <h3>Skills</h3>
+            <div class="pill-list">
+              <span class="pill">Python</span>
+              <span class="pill">JavaScript</span>
+              <span class="pill">Flask</span>
+              <span class="pill">React</span>
+              <span class="pill">PostgreSQL</span>
+              <span class="pill">AWS</span>
+              <span class="pill">Docker</span>
+              <span class="pill">REST APIs</span>
+              <span class="pill">Prompt Design</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Highlights</h3>
+            <div class="pill-list">
+              <span class="pill">Full-stack apps</span>
+              <span class="pill">AI-assisted workflows</span>
+              <span class="pill">Internal tools</span>
+              <span class="pill">Cross-functional collaboration</span>
+            </div>
+          </div>
+
+          <div class="note">
+            This sample resume is intentionally realistic but slightly imperfect so ResumeIQ's demo analysis has meaningful strengths, weaknesses, and suggested improvements to show.
+          </div>
+        </aside>
+      </section>
+    </article>
+  </div>
+</body>
+</html>

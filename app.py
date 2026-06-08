@@ -18,6 +18,9 @@ load_dotenv()
 
 DEFAULT_MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-4-20250514")
 MAX_UPLOAD_BYTES = 5 * 1024 * 1024
+GITHUB_PROFILE_URL = "https://github.com/RishiRapvi/"
+GITHUB_REPO_URL = "https://github.com/RishiRapvi/ResumeIQ"
+LINKEDIN_URL = "https://www.linkedin.com/in/lockedin999/"
 
 SYSTEM_PROMPT = """You are an expert technical recruiter and resume coach specializing in software engineering and AI/ML roles.
 
@@ -89,6 +92,24 @@ DEMO_ANALYSIS = {
 }
 
 
+def get_template_context(site_mode: str = "dynamic") -> dict[str, Any]:
+    if site_mode not in {"dynamic", "static"}:
+        raise ValueError(f"Unsupported site mode: {site_mode}")
+
+    upload_enabled = site_mode == "dynamic"
+    return {
+        "site_mode": site_mode,
+        "upload_enabled": upload_enabled,
+        "max_upload_mb": MAX_UPLOAD_BYTES // (1024 * 1024),
+        "demo_analysis": DEMO_ANALYSIS,
+        "home_href": "/" if upload_enabled else "./index.html",
+        "sample_resume_href": "/sample-resume" if upload_enabled else "./sample-resume.html",
+        "github_profile_url": GITHUB_PROFILE_URL,
+        "github_repo_url": GITHUB_REPO_URL,
+        "linkedin_url": LINKEDIN_URL,
+    }
+
+
 def create_app() -> Flask:
     app = Flask(__name__)
     app.config["MAX_CONTENT_LENGTH"] = MAX_UPLOAD_BYTES
@@ -96,7 +117,11 @@ def create_app() -> Flask:
 
     @app.get("/")
     def index() -> str:
-        return render_template("index.html", max_upload_mb=MAX_UPLOAD_BYTES // (1024 * 1024))
+        return render_template("index.html", **get_template_context("dynamic"))
+
+    @app.get("/sample-resume")
+    def sample_resume() -> str:
+        return render_template("sample_resume.html", **get_template_context("dynamic"))
 
     @app.get("/api/demo")
     def demo() -> tuple[dict[str, Any], int]:

@@ -14,6 +14,9 @@ ResumeIQ is a Flask-based resume review app that uses Anthropic's Claude API to 
 
 - `app.py` - Flask app and analysis API
 - `templates/index.html` - frontend UI
+- `templates/sample_resume.html` - recruiter demo artifact
+- `scripts/build_github_pages.py` - static export builder for GitHub Pages
+- `docs/` - generated static site for GitHub Pages publishing
 - `requirements.txt` - Python dependencies
 - `render.yaml` - Render deployment blueprint
 - `gunicorn.conf.py` - production web server config
@@ -49,12 +52,51 @@ cp .env.example .env
 python app.py
 ```
 
-Then open [http://localhost:5000](http://localhost:5000).
+Then open [http://127.0.0.1:5000](http://127.0.0.1:5000).
 
 Recruiter-friendly preview:
 
 - Click `Try Demo Mode` on the landing page to load a sample analysis instantly.
 - This works without uploading a PDF and without setting `ANTHROPIC_API_KEY`.
+
+## Publish free on GitHub Pages
+
+This repo now supports a zero-cost static recruiter demo on GitHub Pages.
+
+### Build the Pages site
+
+```bash
+.venv/bin/python scripts/build_github_pages.py
+```
+
+That command generates a static site in `docs/`.
+
+### What the GitHub Pages version includes
+
+- The recruiter-focused homepage
+- Working demo mode directly in the browser
+- The sample resume page
+- Your GitHub and LinkedIn links
+
+### What the GitHub Pages version does not include
+
+- Live PDF upload analysis
+- Flask API routes
+- Anthropic-backed resume processing
+
+GitHub Pages is being used here as a polished static showcase. The full backend implementation stays in the Flask app and source code.
+
+### Enable GitHub Pages
+
+1. Push the repo to GitHub.
+2. In the repository, go to `Settings` -> `Pages`.
+3. Under `Build and deployment`, choose `Deploy from a branch`.
+4. Select the `main` branch and the `/docs` folder.
+5. Save and wait for GitHub to publish the site.
+
+Your public URL will look like:
+
+- `https://rishirapvi.github.io/ResumeIQ/`
 
 ## Deploy to a public domain
 
