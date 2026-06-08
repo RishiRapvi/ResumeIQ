@@ -965,7 +965,12 @@
   </style>
 </head>
 <body>
-  <div class="page-shell">
+  <div
+    class="page-shell"
+    data-site-mode="static"
+    data-upload-enabled="false"
+    data-analyze-endpoint=""
+  >
     <nav>
       <div class="logo">Resume<span>IQ</span></div>
       <div class="nav-tag">Powered by Claude AI</div>
@@ -1166,11 +1171,15 @@
     </footer>
   </div>
 
+  <script id="demo-analysis-data" type="application/json">{"ats_notes": "The resume is generally ATS-friendly because it uses readable headings and straightforward formatting. It would score even better with tighter keyword alignment to the exact target job description.", "ats_score": 88, "demo_mode": true, "missing_keywords": ["LLM evaluation", "RAG", "vector databases", "system design", "CI/CD", "observability"], "overall_score": 84, "source_name": "Demo Candidate - Software Engineer Resume", "strengths": ["Clear progression across internships, projects, and hands-on engineering work", "Strong technical stack coverage across backend, frontend, and cloud tooling", "Impact-oriented bullets that already hint at ownership and collaboration"], "suggestions": [{"fix": "Add metrics such as latency reduction, revenue impact, user growth, or time saved for at least the top 3 bullets.", "issue": "Bullets show solid work but do not consistently quantify results.", "section": "Experience"}, {"fix": "Lead each project bullet with the outcome, then mention the stack and one technical challenge you solved.", "issue": "The strongest technical projects are not framed around the problem solved and the architecture used.", "section": "Projects"}, {"fix": "Split skills into categories such as Languages, Frameworks, Cloud, and AI/ML to improve readability and ATS parsing.", "issue": "The skills list is broad but visually flat, which makes it harder to scan quickly.", "section": "Skills"}], "summary": "This resume reads like a strong early-career to mid-level software engineer profile with clear product impact and a solid technical foundation. The biggest opportunity is tightening the narrative around measurable outcomes and making AI/ML experience more explicit for target roles.", "weaknesses": ["Several bullets describe responsibilities without quantifying business impact", "AI/ML exposure is present but not positioned strongly enough for AI-focused roles", "Skills section could be grouped more cleanly for faster recruiter and ATS scanning"]}</script>
   <script>
-    const SITE_MODE = "static";
-    const UPLOAD_ENABLED = false;
-    const ANALYZE_ENDPOINT = null;
-    const DEMO_ANALYSIS = {"ats_notes": "The resume is generally ATS-friendly because it uses readable headings and straightforward formatting. It would score even better with tighter keyword alignment to the exact target job description.", "ats_score": 88, "demo_mode": true, "missing_keywords": ["LLM evaluation", "RAG", "vector databases", "system design", "CI/CD", "observability"], "overall_score": 84, "source_name": "Demo Candidate - Software Engineer Resume", "strengths": ["Clear progression across internships, projects, and hands-on engineering work", "Strong technical stack coverage across backend, frontend, and cloud tooling", "Impact-oriented bullets that already hint at ownership and collaboration"], "suggestions": [{"fix": "Add metrics such as latency reduction, revenue impact, user growth, or time saved for at least the top 3 bullets.", "issue": "Bullets show solid work but do not consistently quantify results.", "section": "Experience"}, {"fix": "Lead each project bullet with the outcome, then mention the stack and one technical challenge you solved.", "issue": "The strongest technical projects are not framed around the problem solved and the architecture used.", "section": "Projects"}, {"fix": "Split skills into categories such as Languages, Frameworks, Cloud, and AI/ML to improve readability and ATS parsing.", "issue": "The skills list is broad but visually flat, which makes it harder to scan quickly.", "section": "Skills"}], "summary": "This resume reads like a strong early-career to mid-level software engineer profile with clear product impact and a solid technical foundation. The biggest opportunity is tightening the narrative around measurable outcomes and making AI/ML experience more explicit for target roles.", "weaknesses": ["Several bullets describe responsibilities without quantifying business impact", "AI/ML exposure is present but not positioned strongly enough for AI-focused roles", "Skills section could be grouped more cleanly for faster recruiter and ATS scanning"]};
+    const pageShell = document.querySelector(".page-shell");
+    const SITE_MODE = pageShell?.dataset.siteMode || "dynamic";
+    const UPLOAD_ENABLED = pageShell?.dataset.uploadEnabled === "true";
+    const ANALYZE_ENDPOINT = pageShell?.dataset.analyzeEndpoint || null;
+    const DEMO_ANALYSIS = JSON.parse(
+      document.getElementById("demo-analysis-data").textContent
+    );
 
     const dropZone = document.getElementById("drop-zone");
     const fileInput = document.getElementById("file-input");

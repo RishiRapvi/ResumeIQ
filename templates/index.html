@@ -965,7 +965,12 @@
   </style>
 </head>
 <body>
-  <div class="page-shell">
+  <div
+    class="page-shell"
+    data-site-mode="{{ site_mode }}"
+    data-upload-enabled="{{ 'true' if upload_enabled else 'false' }}"
+    data-analyze-endpoint="{{ '/api/analyze' if upload_enabled else '' }}"
+  >
     <nav>
       <div class="logo">Resume<span>IQ</span></div>
       <div class="nav-tag">Powered by Claude AI</div>
@@ -1206,11 +1211,15 @@
     </footer>
   </div>
 
+  <script id="demo-analysis-data" type="application/json">{{ demo_analysis | tojson }}</script>
   <script>
-    const SITE_MODE = {{ site_mode | tojson }};
-    const UPLOAD_ENABLED = {{ upload_enabled | tojson }};
-    const ANALYZE_ENDPOINT = {{ ("/api/analyze" if upload_enabled else none) | tojson }};
-    const DEMO_ANALYSIS = {{ demo_analysis | tojson }};
+    const pageShell = document.querySelector(".page-shell");
+    const SITE_MODE = pageShell?.dataset.siteMode || "dynamic";
+    const UPLOAD_ENABLED = pageShell?.dataset.uploadEnabled === "true";
+    const ANALYZE_ENDPOINT = pageShell?.dataset.analyzeEndpoint || null;
+    const DEMO_ANALYSIS = JSON.parse(
+      document.getElementById("demo-analysis-data").textContent
+    );
 
     const dropZone = document.getElementById("drop-zone");
     const fileInput = document.getElementById("file-input");
